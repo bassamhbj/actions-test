@@ -20,4 +20,9 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
 
-    - run: echo "💡 ${{ vars.NAME }}"
+    - uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ vars.RESOURCE_GROUP }}
+        template: ./main.bicep
+        parameters: projectName=${{ vars.PROJECT_NAME }}
