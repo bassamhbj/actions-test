@@ -23,7 +23,7 @@ jobs:
         deploymentName: ${{ github.run_number }}
         resourceGroupName: ${{ vars.RESOURCE_GROUP }}
         template: ./main.bicep
-        parameters: projectName=${{ vars.PROJECT_NAME }}
+        parameters: projectName=${{ vars.PROJECT_NAME }}${{ github.run_number }}
 
     # - run: |
     #     echo "💡 Deploying Azure Bicep Template"
