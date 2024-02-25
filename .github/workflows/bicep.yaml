@@ -1,6 +1,13 @@
 name: Azure Bicep CD
 
-on: [workflow_dispatch]
+# on: [workflow_dispatch]
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - infra/**
 
 permissions:
   id-token: write
@@ -18,16 +25,16 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
 
-    - uses: azure/arm-deploy@v1
-      with:
-        deploymentName: ${{ github.run_number }}
-        resourceGroupName: ${{ vars.RESOURCE_GROUP }}
-        template: ./main.bicep
-        parameters: projectName=${{ vars.PROJECT_NAME }}${{ github.run_number }}
+    # - uses: azure/arm-deploy@v1
+    #   with:
+    #     deploymentName: ${{ github.run_number }}
+    #     resourceGroupName: ${{ vars.RESOURCE_GROUP }}
+    #     template: ./main.bicep
+    #     parameters: projectName=${{ vars.PROJECT_NAME }}${{ github.run_number }}
 
-    # - run: |
-    #     echo "💡 Deploying Azure Bicep Template"
-    #     az deployment group create \
-    #       --resource-group ${{ vars.RESOURCE_GROUP }} \
-    #       --template-file main.bicep \
-    #       --parameters projectName=${{ vars.PROJECT_NAME }}
+    - run: |
+        echo "💡 Deploying Azure Bicep Template"
+        az deployment group create \
+          --resource-group ${{ vars.RESOURCE_GROUP }} \
+          --template-file main.bicep \
+          --parameters projectName=${{ vars.PROJECT_NAME }}
